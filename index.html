@@ -34,10 +34,20 @@
         let count = localStorage.getItem('radha_jap_count') ? parseInt(localStorage.getItem('radha_jap_count')) : 0;
         document.getElementById('japCount').innerText = count;
 
+        // Audio Object Create Kiya (Filename: radha.mp3)
+        const radhaSound = new Audio('radha.mp3');
+
         function incrementCount() {
             count++;
             updateDisplay();
-            // Phone me haptic vibration feel dene ke liye (agar device support kare)
+            
+            // Sound Play Logic
+            radhaSound.currentTime = 0; // Audio ko start se reset karega taki fast tap par sound kate nahi
+            radhaSound.play().catch(function(error) {
+                console.log("Audio play blocked by browser policy until first interaction.");
+            });
+
+            // Phone vibration feel ke liye
             if (navigator.vibrate) navigator.vibrate(50);
         }
 
